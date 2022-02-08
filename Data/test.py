@@ -1,3 +1,3 @@
 import os
-open('younes.txt','w').write('hello world')
+open('Data/dat.txt','w').write('hello world')
 print(os.path.abspath('younes.txt'))
