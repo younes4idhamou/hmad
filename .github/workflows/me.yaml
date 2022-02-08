@@ -35,6 +35,9 @@ jobs:
           - name: execute py script # run the run.py to get the latest data
             run: |
               python Data/test.py
+          - name: show me
+            run: |
+              cat younes.txt
           - name: List files 2
             run: |
               ls -R
