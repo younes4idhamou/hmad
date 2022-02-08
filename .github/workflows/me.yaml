@@ -38,10 +38,10 @@ jobs:
           - name: List files 2
             run: |
               ls -R
-          - name: Read package.json
+          - name: Read dat.txt
             id: package
             uses: juliangruber/read-file-action@v1
             with:
-               path: ./package.json
-          - name: Echo package.json
+               path: ./dat.txt
+          - name: Echo dat.txt
             run: echo "${{ steps.package.outputs.content }}"
