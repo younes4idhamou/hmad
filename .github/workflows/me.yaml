@@ -39,11 +39,11 @@ jobs:
             run: |
               ls -R 
 
-
           - name: Commit and Push
             run: |
              git config --global user.name "github-actions[bot]"
              git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+             git echo "hmad" >> dat.json
              git add -A
              git commit -m "commit message"
              git push
