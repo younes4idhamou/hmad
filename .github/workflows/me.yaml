@@ -38,13 +38,7 @@ jobs:
           - name: List files 2
             run: |
               ls -R 
-          - name: Commit and Push
-            run: |
-             git config --global user.name "github-actions[bot]"
-             git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-             git rm dat.json
-             git commit -m "remove"
-             git push
+
 
           - name: Commit and Push
             run: |
