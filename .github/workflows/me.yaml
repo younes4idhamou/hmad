@@ -34,14 +34,7 @@ jobs:
               python -m pip install pandas
           - name: execute py script # run the run.py to get the latest data
             run: |
-              python req.py
+              python test.py
           - name: List files 2
             run: |
               ls -R
-          - name: Read dat.txt
-            id: package
-            uses: juliangruber/read-file-action@v1
-            with:
-               path: ./dat.txt
-          - name: Echo dat.txt
-            run: echo "${{ steps.package.outputs.content }}"
