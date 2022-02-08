@@ -54,4 +54,4 @@ with open('dat.txt', 'w') as f:
     f.write(out)
 output=open('dat.txt', 'a').write("]")
 print(output)
-print(open('dat.txt','r'))
+print(open('dat.txt','r').read())
