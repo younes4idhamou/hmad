@@ -52,7 +52,7 @@ for ville in open('villes.txt','r'):
             comment=''
         
         pharmacies.append([a.a.text,m,ville.replace('\n',''),a.find_all('span',{'itemprop':'streetAddress'})[0].span.text[2:-3],comment.replace('[','').replace(']',''),a.find_all('div',{'class':'tel'})[0].text[2:]])
-df2 = pd.DataFrame(pharmacies,columns=['pharmacie', 'lien', 'quartier','adresse','coordonnee','telephone'])
+df2 = pd.DataFrame(pharmacies,columns=['pharmacie', 'lien', 'ville','adresse','coordonnee','telephone'])
 out="["+df2.to_json(orient='records')[1:-1].replace('},{', '},{')+"]"
 print(out)
 output=open('dat.json', 'w')
