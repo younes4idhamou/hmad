@@ -6,7 +6,6 @@ from urllib.request import Request, urlopen
 from bs4 import BeautifulSoup,Comment
 import json
 import pathlib
-
 class pharmacie:
 
     def __init__(self,nom="",ville="",adresse="",num="",cord=''):
