@@ -34,7 +34,7 @@ jobs:
               python -m pip install pandas
           - name: execute py script # run the run.py to get the latest data
             run: |
-              python test.py
+              python Data/test.py
           - name: List files 2
             run: |
               ls -R
