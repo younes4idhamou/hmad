@@ -1,1 +1,1 @@
-a=open('datax.txt','w').write('hello')
+a=open('../datax.txt','w').write('hello')
