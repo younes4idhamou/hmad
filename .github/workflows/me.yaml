@@ -17,6 +17,9 @@ jobs:
           - name: install request
             run: |
               python -m pip install requests
+          - name: install request
+            run: |
+              python -m pip install requests
           - name: install bs4
             run: |
               python -m pip install bs4
