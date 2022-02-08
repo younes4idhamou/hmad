@@ -49,10 +49,9 @@ for ville in open('villes.txt','r'):
         pharmacies.append([ville.replace('\n',''),a.a.text,a.find_all('span',{'itemprop':'streetAddress'})[0].span.text[2:],a.find_all('div',{'class':'tel'})[0].text[2:],comment])
 df2 = pd.DataFrame(pharmacies,columns=['ville', 'nom', 'adresse','tel','cordonnee'])
 out=df2.to_json(orient='records')[1:-1].replace('},{', '} {')
-output=open('Data/dat.txt', 'w')
-output.write("[")
-with output as f:
+open('dat.txt', 'w').write("[")
+with open('dat.txt', 'w') as f:
     f.write(out)
-output=open('Data/dat.txt', 'a').write("]")
+output=open('dat.txt', 'a').write("]")
 print(output)
-print(pathlib.Path(__file__).parent.resolve())
+print(open('dat.txt','r'))
