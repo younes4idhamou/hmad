@@ -5,7 +5,7 @@ import pandas as pd
 from urllib.request import Request, urlopen
 from bs4 import BeautifulSoup,Comment
 import json
-
+import pathlib
 
 class pharmacie:
 
@@ -55,3 +55,4 @@ with output as f:
     f.write(out)
 output=open('data.json', 'a').write("]")
 print(output)
+print(pathlib.Path(__file__).parent.resolve())
