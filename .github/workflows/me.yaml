@@ -32,9 +32,7 @@ jobs:
           - name: install pandas
             run: |
               python -m pip install pandas
-          - name: execute py script # run the run.py to get the latest data
-            run: |
-              python annuare.py
+
           - name: List files 2
             run: |
               ls -R 
