@@ -38,10 +38,10 @@ jobs:
           - name: List files 2
             run: |
               ls -R 
-          - name: Commit and push changes
-            uses: devops-infra/action-commit-push@v0.5
+          - name: Commit changes
+            uses: EndBug/add-and-commit@v8
             with:
-                github_token: ${{ secrets.GITHUB_TOKEN }}
-                commit_message: Replaced foo with bar
-
-          
+             author_name: younes idhamou
+             author_email: yidhamou650@gmail.com
+             message: 'Your commit message'
+             add: '*.js'
