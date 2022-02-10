@@ -38,11 +38,10 @@ jobs:
           - name: List files 2
             run: |
               ls -R 
-          - name: commit changes
-            run: |
-             git config --local user.email "action@github.com"
-             git config --local user.name "GitHub Action"
-             git add -A
-             git commit -S -m "Commit stuff" -a
+          - name: Commit and push changes
+            uses: devops-infra/action-commit-push@v0.5
+            with:
+                github_token: ${{ secrets.GITHUB_TOKEN }}
+                commit_message: Replaced foo with bar
 
           
