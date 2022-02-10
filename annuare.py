@@ -67,6 +67,6 @@ for ville in open('href.txt','r'):
 df2 = pd.DataFrame(pharmacies,columns=['pharmacie', 'lien', 'quartier','adresse','coordonnee','telephone'])
 out="["+df2.to_json(orient='records')[1:-1].replace('},{', '},{')+"]"
 print(out)
-output=open('data1.json', 'w')
+output=open('data.json', 'w')
 with output as f:
     f.write(out)
