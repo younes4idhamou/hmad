@@ -53,10 +53,16 @@ for ville in open('href.txt','r'):
         loc=soup.find_all("a",{'title':'Localiser'})
         if len(loc)!=0:
             loc=loc[0].get('href')
-            cordonnee=loc.replace("http://maps.google.com/maps?q=","")
+            try:
+                cordonnee=loc.replace("http://maps.google.com/maps?q=","")
+                x=cordonnee.find(',')
+                b=float(cordonnee[:x])
+            except:
+                cordonnee=''    
         else :
             loc=''
         print(name+"==========>"+cordonnee)
+
         pharmacies.append([name,lien,quartier,adresse,cordonnee,tel])
 df2 = pd.DataFrame(pharmacies,columns=['pharmacie', 'lien', 'quartier','adresse','coordonnee','telephone'])
 out="["+df2.to_json(orient='records')[1:-1].replace('},{', '},{')+"]"
