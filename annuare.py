@@ -6,6 +6,18 @@ from urllib.request import Request, urlopen
 from bs4 import BeautifulSoup,Comment
 import json
 
+def extract_garde(url):
+    req=Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+    webpage = urlopen(req).read()
+    soup=BeautifulSoup(webpage,'lxml')
+    article=soup.find_all("table",{"class":"pharma_history"})
+    tr=article[0].find_all('tr')
+    print(tr)
+    k=tr[-1].find_all('td')[-1].text.replace('Garde ',"")
+    return k
+
+
+
 def extract_lat_long_via_address(address_or_zipcode):
     lat, lng = None, None
     api_key = 'AIzaSyB1HHWZSfNNL778mo6GlsBeYJ8HFm7ktuU' 
@@ -68,8 +80,9 @@ for ville in open('href.txt','r'):
         quartier=a.find_all('span',{'itemprop':'addressLocality'})[0].text
         lien="https://www.annuaire-gratuit.ma"+a.find_all('a',{'itemprop':'url'})[0].get('href')
         cordonnee=extract_lat_long_via_address(adresse)
-        pharmacies.append([name,lien,quartier,adresse,cordonnee,tel])
-df2 = pd.DataFrame(pharmacies,columns=['pharmacie', 'lien', 'quartier','adresse','coordonnee','telephone'])
+        etat=extract_garde(lien)
+        pharmacies.append([name,lien,quartier,adresse,cordonnee,tel,etat])
+df2 = pd.DataFrame(pharmacies,columns=['pharmacie', 'lien', 'quartier','adresse','coordonnee','telephone','etat'])
 out="["+df2.to_json(orient='records')[1:-1].replace('},{', '},{')+"]"
 print(out)
 output=open('data1.json', 'w')
