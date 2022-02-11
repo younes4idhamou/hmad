@@ -12,14 +12,12 @@ def extract_garde(url):
     soup=BeautifulSoup(webpage,'lxml')
     article=soup.find_all("table",{"class":"pharma_history"})
     tr=article[0].find_all('tr')
-    print(tr)
     k=tr[-1].find_all('td')[-1].text.replace('Garde ',"")
     return k
 
 
 
-def extract_lat_long_via_address(address_or_zipcode):
-    lat, lng = None, None
+def extract_lat_long_via_address(address_or_zipcode,url):
     api_key = 'AIzaSyB1HHWZSfNNL778mo6GlsBeYJ8HFm7ktuU' 
     base_url = "https://maps.googleapis.com/maps/api/geocode/json"
     endpoint = f"{base_url}?address={address_or_zipcode}&key={api_key}"
@@ -33,6 +31,7 @@ def extract_lat_long_via_address(address_or_zipcode):
         cord=adresse[0].a.get('href').replace("http://maps.google.com/maps?q=","")
         try:
             b=float(cord[0:cord.find(",")])
+            print(cord)
             return cord
         except:
             return "0.00000, 0.000000"
@@ -76,7 +75,6 @@ class pharmacie:
 cle='AIzaSyBnN118yXQmI6PseuR6rsSRJNZCOkiNJKQ'
 pharmacies=[]
 for ville in open('href.txt','r'):
-    print(ville)
     req=Request("https://www.annuaire-gratuit.ma"+ville.replace('\n',''), headers={'User-Agent': 'Mozilla/5.0'})
     webpage = urlopen(req).read()
     soup=BeautifulSoup(webpage,'lxml')
@@ -88,13 +86,14 @@ for ville in open('href.txt','r'):
         tel=a.find_all('span',{'itemprop':'telephone'})[0].a.get('href').replace('tel:',"")
         quartier=a.find_all('span',{'itemprop':'addressLocality'})[0].text
         lien="https://www.annuaire-gratuit.ma"+a.find_all('a',{'itemprop':'url'})[0].get('href')
-        cordonnee=extract_lat_long_via_address(name)
+        cordonnee=extract_lat_long_via_address(name,lien)
         etat=extract_garde(lien)
-        if cordonnee!="0.00000, 0.000000":
+        if cordonnee!="0.00000, 0.000000" & cordonnee!="None, None:
             pharmacies.append([name,lien,quartier,adresse,cordonnee,tel,etat,cle])
+        else:
+            print('hello')
 df2 = pd.DataFrame(pharmacies,columns=['pharmacie', 'lien', 'quartier','adresse','coordonnee','telephone','etat','cle'])
 out="["+df2.to_json(orient='records')[1:-1].replace('},{', '},{')+"]"
-print(out)
 output=open('data1.json', 'w')
 with output as f:
     f.write(out)
