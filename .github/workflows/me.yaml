@@ -38,8 +38,8 @@ jobs:
           - name: List files 2
             run: |
               ls -R 
-          - name: Commit and push changes
-            uses: devops-infra/action-commit-push@v0.5
-            with:
-             github_token: ${{ secrets.GITHUB_TOKEN }}
-             commit_prefix: "[AUTO-COMMIT] foo/bar replace"
+          - name: commit
+            run: |
+                git add time.txt
+                git commit -m "new date commit"
+                git push origin master
