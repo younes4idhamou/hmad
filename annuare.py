@@ -94,7 +94,7 @@ for ville in open('href.txt','r'):
             if cordonnee!="None, None":
                 pharmacies.append([name,lien,quartier,adresse,cordonnee,tel,etat,cle])
             else:
-                 req=Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+                 req=Request(lien, headers={'User-Agent': 'Mozilla/5.0'})
                  webpage = urlopen(req).read()
                  soup=BeautifulSoup(webpage,'lxml')
                  adresse=soup.find_all("address")
