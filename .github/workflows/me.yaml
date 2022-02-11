@@ -40,6 +40,6 @@ jobs:
               ls -R 
           - name: commit
             run: |
-                git add time.txt
+                git add data.json
                 git commit -m "new date commit"
                 git push origin master
