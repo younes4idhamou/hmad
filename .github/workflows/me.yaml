@@ -38,13 +38,8 @@ jobs:
           - name: List files 2
             run: |
               ls -R 
-          - name: file
-            run: |
-             data.json>di.json
-          - name: commit
-            run: |
-                git config user.name "GitHub Actions Bot"
-                git config user.email "<>"
-                git add data.json
-                git commit -m "new date commit"
-                git push origin master
+          - uses: EndBug/add-and-commit@v7
+            with:
+               author_name: github-actions
+               author_email: 41898282+github-actions[bot]@users.noreply.github.com
+               message: 'Build frontend'
