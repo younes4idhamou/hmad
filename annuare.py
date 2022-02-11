@@ -88,7 +88,7 @@ for ville in open('href.txt','r'):
         lien="https://www.annuaire-gratuit.ma"+a.find_all('a',{'itemprop':'url'})[0].get('href')
         cordonnee=extract_lat_long_via_address(name,lien)
         etat=extract_garde(lien)
-        if cordonnee!="0.00000, 0.000000" & cordonnee!="None, None:
+        if cordonnee!="0.00000, 0.000000" & cordonnee!="None, None":
             pharmacies.append([name,lien,quartier,adresse,cordonnee,tel,etat,cle])
         else:
             print('hello')
