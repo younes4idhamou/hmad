@@ -18,6 +18,8 @@ def extract_garde(url):
 
 
 def extract_lat_long_via_address(address_or_zipcode,url):
+    lat=None
+    lng=None
     api_key = 'AIzaSyB1HHWZSfNNL778mo6GlsBeYJ8HFm7ktuU' 
     base_url = "https://maps.googleapis.com/maps/api/geocode/json"
     endpoint = f"{base_url}?address={address_or_zipcode}&key={api_key}"
