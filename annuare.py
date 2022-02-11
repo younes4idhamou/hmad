@@ -92,7 +92,20 @@ for ville in open('href.txt','r'):
         etat=extract_garde(lien)
         if cordonnee!="0.00000, 0.000000":
             if cordonnee!="None, None":
-                pharmacies.append([name,lien,quartier,adresse,cordonnee,tel,etat,cle])         
+                pharmacies.append([name,lien,quartier,adresse,cordonnee,tel,etat,cle])
+            else:
+                 req=Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+                 webpage = urlopen(req).read()
+                 soup=BeautifulSoup(webpage,'lxml')
+                 adresse=soup.find_all("address")
+                 cord=adresse[0].a.get('href').replace("http://maps.google.com/maps?q=","")
+                 try:
+                    b=float(cord[0:cord.find(",")])
+                    print(cord)
+                    pharmacies.append([name,lien,quartier,adresse,cord,tel,etat,cle])
+                 except:
+                    pharmacies.append([name,lien,quartier,adresse,"0.00000, 0.000000",tel,etat,cle])
+            
         else:
             print('hello')
 df2 = pd.DataFrame(pharmacies,columns=['pharmacie', 'lien', 'quartier','adresse','coordonnee','telephone','etat','cle'])
