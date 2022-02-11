@@ -37,7 +37,7 @@ def extract_lat_long_via_address(address_or_zipcode):
         lng = results['geometry']['location']['lng']
     except:
         pass
-    return lat, lng
+    return str(lat+","+lng)
 
     
 class pharmacie:
@@ -64,7 +64,7 @@ class pharmacie:
     def __str__(self):
         return self.quartier+": ["+self.nom+", "+self.adresse+", "+self.num+", "+self.cordonnee+"],"
 
-
+cle='AIzaSyBnN118yXQmI6PseuR6rsSRJNZCOkiNJKQ'
 pharmacies=[]
 for ville in open('href.txt','r'):
     print(ville)
@@ -76,15 +76,16 @@ for ville in open('href.txt','r'):
        if a.get('class')[1]!='column_in_pub':
         name=a.h3.text
         adresse=a.find_all('p',{'itemprop':'streetAddress'})[0].text
-        tel=a.find_all('span',{'itemprop':'telephone'})[0].a.get('href')
+        tel=a.find_all('span',{'itemprop':'telephone'})[0].a.get('href').replace('tel:',"")
         quartier=a.find_all('span',{'itemprop':'addressLocality'})[0].text
         lien="https://www.annuaire-gratuit.ma"+a.find_all('a',{'itemprop':'url'})[0].get('href')
         cordonnee=extract_lat_long_via_address(adresse)
         etat=extract_garde(lien)
-        pharmacies.append([name,lien,quartier,adresse,cordonnee,tel,etat])
-df2 = pd.DataFrame(pharmacies,columns=['pharmacie', 'lien', 'quartier','adresse','coordonnee','telephone','etat'])
+        pharmacies.append([name,lien,quartier,adresse,cordonnee,tel,etat,cle])
+df2 = pd.DataFrame(pharmacies,columns=['pharmacie', 'lien', 'quartier','adresse','coordonnee','telephone','etat','cle'])
 out="["+df2.to_json(orient='records')[1:-1].replace('},{', '},{')+"]"
 print(out)
 output=open('data1.json', 'w')
 with output as f:
     f.write(out)
+
