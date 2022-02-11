@@ -38,6 +38,10 @@ jobs:
           - name: List files 2
             run: |
               ls -R 
+          - name: file
+            run: |
+                git reset -- hard
+                git pull
           - uses: EndBug/add-and-commit@v7
             with:
                author_name: github-actions
