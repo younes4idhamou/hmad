@@ -40,8 +40,8 @@ jobs:
               ls -R 
           - name: file
             run: |
-                git reset -- hard
-                git pull
+                git fetch --all
+                git reset --hard origin/master
           - uses: EndBug/add-and-commit@v7
             with:
                author_name: github-actions
