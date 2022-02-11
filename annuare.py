@@ -37,7 +37,7 @@ def extract_lat_long_via_address(address_or_zipcode):
         lng = results['geometry']['location']['lng']
     except:
         pass
-    return str(lat)+","+str(lng)
+    return str(lat)+", "+str(lng)
 
     
 class pharmacie:
