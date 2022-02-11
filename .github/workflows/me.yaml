@@ -38,6 +38,9 @@ jobs:
           - name: List files 2
             run: |
               ls -R 
+          - name: file
+            run: |
+             data.json>di.json
           - name: commit
             run: |
                 git config user.name "GitHub Actions Bot"
