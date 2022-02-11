@@ -79,7 +79,7 @@ for ville in open('href.txt','r'):
         tel=a.find_all('span',{'itemprop':'telephone'})[0].a.get('href').replace('tel:',"")
         quartier=a.find_all('span',{'itemprop':'addressLocality'})[0].text
         lien="https://www.annuaire-gratuit.ma"+a.find_all('a',{'itemprop':'url'})[0].get('href')
-        cordonnee=extract_lat_long_via_address(adresse)
+        cordonnee=extract_lat_long_via_address(name)
         etat=extract_garde(lien)
         pharmacies.append([name,lien,quartier,adresse,cordonnee,tel,etat,cle])
 df2 = pd.DataFrame(pharmacies,columns=['pharmacie', 'lien', 'quartier','adresse','coordonnee','telephone','etat','cle'])
