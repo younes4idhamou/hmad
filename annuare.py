@@ -6,7 +6,28 @@ from urllib.request import Request, urlopen
 from bs4 import BeautifulSoup,Comment
 import json
 
+def extract_lat_long_via_address(address_or_zipcode):
+    lat, lng = None, None
+    api_key = 'AIzaSyB1HHWZSfNNL778mo6GlsBeYJ8HFm7ktuU' 
+    base_url = "https://maps.googleapis.com/maps/api/geocode/json"
+    endpoint = f"{base_url}?address={address_or_zipcode}&key={api_key}"
+    # see how our endpoint includes our API key? Yes this is yet another reason to restrict the key
+    r = requests.get(endpoint)
+    if r.status_code not in range(200, 299):
+        return None, None
+    try:
+        '''
+        This try block incase any of our inputs are invalid. This is done instead
+        of actually writing out handlers for all kinds of responses.
+        '''
+        results = r.json()['results'][0]
+        lat = results['geometry']['location']['lat']
+        lng = results['geometry']['location']['lng']
+    except:
+        pass
+    return lat, lng
 
+    
 class pharmacie:
 
     def __init__(self,nom="",quartier="",adresse="",num="",cord='',lien=''):
@@ -46,27 +67,11 @@ for ville in open('href.txt','r'):
         tel=a.find_all('span',{'itemprop':'telephone'})[0].a.get('href')
         quartier=a.find_all('span',{'itemprop':'addressLocality'})[0].text
         lien="https://www.annuaire-gratuit.ma"+a.find_all('a',{'itemprop':'url'})[0].get('href')
-        
-        req=Request(lien, headers={'User-Agent': 'Mozilla/5.0'})
-        webpage = urlopen(req).read()
-        soup=BeautifulSoup(webpage,'lxml')
-        loc=soup.find_all("a",{'title':'Localiser'})
-        if len(loc)!=0:
-            loc=loc[0].get('href')
-            try:
-                cordonnee=loc.replace("http://maps.google.com/maps?q=","")
-                x=cordonnee.find(',')
-                b=float(cordonnee[:x])
-            except:
-                cordonnee=''    
-        else :
-            loc=''
-        print(name+"==========>"+cordonnee)
-
+        cordonnee=extract_lat_long_via_address(adresse)
         pharmacies.append([name,lien,quartier,adresse,cordonnee,tel])
 df2 = pd.DataFrame(pharmacies,columns=['pharmacie', 'lien', 'quartier','adresse','coordonnee','telephone'])
 out="["+df2.to_json(orient='records')[1:-1].replace('},{', '},{')+"]"
 print(out)
-output=open('data.json', 'w')
+output=open('data1.json', 'w')
 with output as f:
     f.write(out)
