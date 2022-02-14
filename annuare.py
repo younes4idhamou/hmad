@@ -86,8 +86,9 @@ for ville in open('href.txt','r'):
         adresse=a.find_all('p',{'itemprop':'streetAddress'})[0].text
         tel=a.find_all('span',{'itemprop':'telephone'})[0].a.get('href').replace('tel:',"")
         quartier=a.find_all('span',{'itemprop':'addressLocality'})[0].text
+        ville=a.find_all('span',{'itemprop':'addressLocality'})[1].text
         lien="https://www.annuaire-gratuit.ma"+a.find_all('a',{'itemprop':'url'})[0].get('href')
-        cordonnee=extract_lat_long_via_address(name,lien)
+        cordonnee=extract_lat_long_via_address(adresse,lien)
         etat=extract_garde(lien)
         if cordonnee!="0.00000, 0.000000":
             if cordonnee!="None, None":
