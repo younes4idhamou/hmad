@@ -14,7 +14,6 @@ def extract_garde(url):
     tr=article[0].find_all('tr')
     k=tr[-1].find_all('td')[-1].text.replace('Garde ',"")
     return k
-
 def extract_lat_long_via_address(address_or_zipcode,url):
     lat=None
     lng=None
