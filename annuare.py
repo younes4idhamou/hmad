@@ -81,7 +81,7 @@ for ville in open('href.txt','r'):
     for a in article:
        if a.get('class')[1]!='column_in_pub':
         name=a.h3.text
-        adresse=a.find_all('p',{'itemprop':'streetAddress'})[0].text
+        adresse=str(a.find_all('p',{'itemprop':'streetAddress'})[0].text)
         tel=a.find_all('span',{'itemprop':'telephone'})[0].a.get('href').replace('tel:',"")
         quartier=a.find_all('span',{'itemprop':'addressLocality'})[0].text
         lien="https://www.annuaire-gratuit.ma"+a.find_all('a',{'itemprop':'url'})[0].get('href')
