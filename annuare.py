@@ -86,7 +86,7 @@ for ville in open('href.txt','r'):
         quartier=a.find_all('span',{'itemprop':'addressLocality'})[0].text
         lien="https://www.annuaire-gratuit.ma"+a.find_all('a',{'itemprop':'url'})[0].get('href')
         addlink=a.find_all('a',{'title':'Localiser'})[0].get('href').replace("http://maps.google.com/maps?q=","")
-        cordonnee=extract_lat_long_via_address(addlink,lien)
+        cordonnee=extract_lat_long_via_address(quartier+" "+adresse,lien)
         etat=extract_garde(lien)
         if cordonnee!="0.00000, 0.000000":
             if cordonnee!="None, None":
