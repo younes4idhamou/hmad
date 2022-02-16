@@ -16,14 +16,22 @@ def extract_garde(url):
     tr=article[0].find_all('tr')
     k=tr[-1].find_all('td')[-1].text.replace('Garde ',"")
     return k
-def extract_lat_long_via_address(address_or_zipcode):
+def extract_lat_long_via_address(address_or_zipcode,lien):
     lat=None
     lng=None
     gmaps_key = googlemaps.Client(key="AIzaSyB1HHWZSfNNL778mo6GlsBeYJ8HFm7ktuU")
     g = gmaps_key.geocode(address_or_zipcode)
-    lat = g[0]["geometry"]["location"]["lat"]
-    lng = g[0]["geometry"]["location"]["lng"]
-    return str(lat)+','+str(lng)
+    try:
+        lat = g[0]["geometry"]["location"]["lat"]
+        lng = g[0]["geometry"]["location"]["lng"]
+        return str(lat)+','+str(lng)
+    except:
+        req=Request(lien, headers={'User-Agent': 'Mozilla/5.0'})
+        webpage = urlopen(req).read()
+        soup=BeautifulSoup(webpage,'lxml')
+        adresse=soup.find_all("address")
+        cord=adresse[0].a.get('href').replace("http://maps.google.com/maps?q=","")
+        return cord
     
 class pharmacie:
 
@@ -68,7 +76,7 @@ for ville in open('href.txt','r'):
             ville=""
         lien="https://www.annuaire-gratuit.ma"+a.find_all('a',{'itemprop':'url'})[0].get('href')
         addlink=a.find_all('a',{'title':'Localiser'})[0].get('href').replace("http://maps.google.com/maps?q=","")
-        cordonnee=extract_lat_long_via_address(ville+" "+quartier+" "+name)
+        cordonnee=extract_lat_long_via_address(ville+" "+quartier+" "+name,lien)
         etat=extract_garde(lien)
         pharmacies.append([name,lien,quartier,adresse,cordonnee,tel,etat,cle])
 df2 = pd.DataFrame(pharmacies,columns=['pharmacie', 'lien', 'quartier','adresse','coordonnee','telephone','etat','cle'])
