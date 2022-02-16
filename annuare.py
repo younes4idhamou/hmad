@@ -14,7 +14,7 @@ def extract_garde(url):
     tr=article[0].find_all('tr')
     k=tr[-1].find_all('td')[-1].text.replace('Garde ',"")
     return k
-def extract_lat_long_via_address(address_or_zipcode,url):
+def extract_lat_long_via_address(address_or_zipcode,url,ville):
     lat=None
     lng=None
     api_key = 'AIzaSyB1HHWZSfNNL778mo6GlsBeYJ8HFm7ktuU' 
@@ -40,8 +40,26 @@ def extract_lat_long_via_address(address_or_zipcode,url):
         of actually writing out handlers for all kinds of responses.
         '''
         results = r.json()['results'][0]
-        lat = results['geometry']['location']['lat']
-        lng = results['geometry']['location']['lng']
+        cont = results['address_components']
+        check=0
+        for i in cont:
+           if i['long_name'].lower().find(ville)>=0:
+                lat = results['geometry']['location']['lat']
+                lng = results['geometry']['location']['lng']
+                check=1
+                break
+        if check==0:
+            req=Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+            webpage = urlopen(req).read()
+            soup=BeautifulSoup(webpage,'lxml')
+            adresse=soup.find_all("address")
+            cord=adresse[0].a.get('href').replace("http://maps.google.com/maps?q=","")
+            try:
+                b=float(cord[0:cord.find(",")])
+                print(cord)
+                return str(cord)
+            except:
+                return "0.00000, 0.000000"
     except:
         pass
     return str(lat)+", "+str(lng)
@@ -84,9 +102,10 @@ for ville in open('href.txt','r'):
         adresse=str(a.find_all('p',{'itemprop':'streetAddress'})[0].text)
         tel=a.find_all('span',{'itemprop':'telephone'})[0].a.get('href').replace('tel:',"")
         quartier=a.find_all('span',{'itemprop':'addressLocality'})[0].text
+        ville=a.find_all('span',{'itemprop':'addressLocality'})[1].text
         lien="https://www.annuaire-gratuit.ma"+a.find_all('a',{'itemprop':'url'})[0].get('href')
         addlink=a.find_all('a',{'title':'Localiser'})[0].get('href').replace("http://maps.google.com/maps?q=","")
-        cordonnee=extract_lat_long_via_address(quartier+" "+name,lien)
+        cordonnee=extract_lat_long_via_address(quartier+" "+name,lien,ville)
         etat=extract_garde(lien)
         if cordonnee!="0.00000, 0.000000":
             if cordonnee!="None, None":
