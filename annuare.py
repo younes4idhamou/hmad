@@ -21,7 +21,7 @@ def extract_lat_long_via_address(address_or_zipcode):
     g = gmaps_key.geocode(address_or_zipcode)
     lat = g[0]["geometry"]["location"]["lat"]
     lng = g[0]["geometry"]["location"]["lng"]
-    return str(lat)+','+str(lng))
+    return str(lat)+','+str(lng)
     
 class pharmacie:
 
