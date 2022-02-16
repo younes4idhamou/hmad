@@ -43,7 +43,7 @@ def extract_lat_long_via_address(address_or_zipcode,url,ville):
         cont = results['address_components']
         check=0
         for i in cont:
-           if i['long_name'].lower().find(ville)>=0:
+           if i['long_name'].lower().find(ville)>=0 and ville!="":
                 lat = results['geometry']['location']['lat']
                 lng = results['geometry']['location']['lng']
                 check=1
@@ -102,7 +102,10 @@ for ville in open('href.txt','r'):
         adresse=str(a.find_all('p',{'itemprop':'streetAddress'})[0].text)
         tel=a.find_all('span',{'itemprop':'telephone'})[0].a.get('href').replace('tel:',"")
         quartier=a.find_all('span',{'itemprop':'addressLocality'})[0].text
-        ville=a.find_all('span',{'itemprop':'addressLocality'})[1].text
+        try:
+            ville=a.find_all('span',{'itemprop':'addressLocality'})[1].text
+        except:
+            ville=""
         lien="https://www.annuaire-gratuit.ma"+a.find_all('a',{'itemprop':'url'})[0].get('href')
         addlink=a.find_all('a',{'title':'Localiser'})[0].get('href').replace("http://maps.google.com/maps?q=","")
         cordonnee=extract_lat_long_via_address(quartier+" "+name,lien,ville)
