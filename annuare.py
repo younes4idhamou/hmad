@@ -110,6 +110,7 @@ for ville in open('href.txt','r'):
         addlink=a.find_all('a',{'title':'Localiser'})[0].get('href').replace("http://maps.google.com/maps?q=","")
         cordonnee=extract_lat_long_via_address(quartier+" "+name,lien,ville)
         etat=extract_garde(lien)
+        pharmacies.append([name,lien,quartier,adresse,cordonnee,tel,etat,cle])
 df2 = pd.DataFrame(pharmacies,columns=['pharmacie', 'lien', 'quartier','adresse','coordonnee','telephone','etat','cle'])
 out="["+df2.to_json(orient='records')[1:-1].replace('},{', '},{')+"]"
 output=open('data1.json', 'w')
