@@ -31,7 +31,10 @@ def extract_lat_long_via_address(address_or_zipcode,lien):
         webpage = urlopen(req).read()
         soup=BeautifulSoup(webpage,'lxml')
         adresse=soup.find_all("address")
-        cord=adresse[0].a.get('href').replace("http://maps.google.com/maps?q=","")
+        try:
+            cord=adresse[0].a.get('href').replace("http://maps.google.com/maps?q=","")
+        except:
+            cord='1.11111111, 1.111111111'
         return cord
     
 class pharmacie:
