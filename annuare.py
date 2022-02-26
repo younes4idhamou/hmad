@@ -24,7 +24,7 @@ def extract_lat_long_via_address(address_or_zipcode,lien):
         lat = g[0]["geometry"]["location"]["lat"]
         lng = g[0]["geometry"]["location"]["lng"]
         return str(lat)+','+str(lng)
-    except:
+    except IndexError:
         req=Request(lien, headers={'User-Agent': 'Mozilla/5.0'})
         webpage = urlopen(req).read()
         soup=BeautifulSoup(webpage,'lxml')
