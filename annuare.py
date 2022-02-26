@@ -7,7 +7,6 @@ from bs4 import BeautifulSoup,Comment
 import json
 import googlemaps 
 
-
 def extract_garde(url):
     req=Request(url, headers={'User-Agent': 'Mozilla/5.0'})
     webpage = urlopen(req).read()
