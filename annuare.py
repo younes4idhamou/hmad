@@ -21,8 +21,10 @@ def extract_lat_long_via_address(address_or_zipcode,lien):
     gmaps_key = googlemaps.Client(key="AIzaSyB1HHWZSfNNL778mo6GlsBeYJ8HFm7ktuU")
     g = gmaps_key.geocode(address_or_zipcode)
     try:
-        lat = g[0]["geometry"]["location"]["lat"]
-        lng = g[0]["geometry"]["location"]["lng"]
+        lat = g[0]
+        lat=lat["geometry"]["location"]["lat"]
+        lng = g[0]
+        lng=lng["geometry"]["location"]["lng"]
         return str(lat)+','+str(lng)
     except IndexError:
         req=Request(lien, headers={'User-Agent': 'Mozilla/5.0'})
