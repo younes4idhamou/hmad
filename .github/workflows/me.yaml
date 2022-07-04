@@ -1,8 +1,5 @@
 name: py
-on:
-  schedule:
-    # * is a sal character in YAML so you have to quote this string
-    - cron:  '0 8 * * 1'
+on: [push]
 jobs:
       build:
         runs-on: ubuntu-latest
