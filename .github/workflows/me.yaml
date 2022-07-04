@@ -1,7 +1,7 @@
 name: py
 on:
   schedule:
-    # * is a special character in YAML so you have to quote this string
+    # * is a sal character in YAML so you have to quote this string
     - cron:  '0 8 * * 1'
 jobs:
       build:
