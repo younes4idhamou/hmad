@@ -9,7 +9,7 @@ num=[]
 etat=[]
 pharmacies=[]
 cle=[]
-for ville in open('C:/Users/youne/OneDrive/Bureau/Pharmacie_garde/href.txt','r'):
+for ville in open('href.txt','r'):
             print(ville)
             req=Request("https://www.annuaire-gratuit.ma"+ville.replace('\n',''), headers={'User-Agent': 'Mozilla/5.0'})
             webpage = urlopen(req).read()
