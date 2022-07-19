@@ -1,5 +1,7 @@
 name: py
-on: [push]
+on:
+  schedule:
+    - cron: '0012*/7*?'
 jobs:
       build:
         runs-on: ubuntu-latest
