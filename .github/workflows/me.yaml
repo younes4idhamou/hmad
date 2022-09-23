@@ -2,6 +2,7 @@ name: py
 on:
   schedule:
     - cron: '0 12 * * 1'
+    
 jobs:
       build:
         runs-on: ubuntu-latest
