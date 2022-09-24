@@ -33,7 +33,10 @@ for ville in open('href.txt','r'):
                         num.append(soup.find(attrs={"itemprop":"telephone"}).get('href').replace("tel:",''))
                 except:
                         num.append("0000000000")
-                etat.append(soup.find("table",attrs={"class":"pharma_history"}).find_all("tr")[-1].find_all("td")[-1].text.replace("Garde ",""))
+                try:
+                        etat.append(soup.find("table",attrs={"class":"pharma_history"}).find_all("tr")[-1].find_all("td")[-1].text.replace("Garde ",""))
+                except:
+                        etat.append("Jour et Nuit")
                 add=soup.find('address')
                 try:
                         adresse.append(add.text)
