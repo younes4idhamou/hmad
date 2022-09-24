@@ -44,8 +44,8 @@ for ville in open('href.txt','r'):
                         adresse.append("")
                 try:
                         co=add.find('a').get('href').replace("http://maps.google.com/maps?q=",'').replace(",",", ")
-                        co1=float(co[0:di['coordonnee'].find(",")])
-                        co2=float(co[di['coordonnee'].find(",")+2:])
+                        co1=float(co[0:co.find(",")])
+                        co2=float(co[co.find(",")+2:])
                         coordonee.append(str(co1)+", "+str(co2))
                 except:
                         coordonee.append("0.00000000, 0.00000000")
